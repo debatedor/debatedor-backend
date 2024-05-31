@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Either, failure, success } from '@/core/types/either';
 // Precisa importar o repositorio 
-// Precisa importar os erros
+import { WrongPostInfoError } from './errors/wrong-post-info'// Precisa importar os erros
 
 interface CreatePostUseCaseRequest{
     title: String // titulo da notica TEM QUE ser uma string
@@ -10,7 +10,7 @@ interface CreatePostUseCaseRequest{
 
 }
 
-interface CreatePostUseCaseResponse = Either<
+type CreatePostUseCaseResponse = Either<
  WrongPostInfoError, // criar função em src/domain/aplication/erros
  {
     // post sera criado e publicado. Essa função provavelmente vai estar no controller
