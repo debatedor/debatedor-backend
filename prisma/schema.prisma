@@ -11,12 +11,35 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
+  id        String      @id @default(uuid())
   name      String
-  email     String    @unique
+  email     String      @unique
   password  String
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime?   @updatedAt @map("updated_at")
+  readLater readLater[]
 
   @@map("users")
+}
+
+model Post {
+  id              String      @id @default(uuid())
+  title           String
+  publicationDate DateTime    @default(now()) @map("publication_date")
+  content         String
+  readLater       readLater[]
+  source          String?
+
+  @@map("post")
+}
+
+model readLater {
+  id     String @id @default(uuid())
+  post   Post   @relation(fields: [postId], references: [id])
+  postId String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@unique([userId, postId])
+  @@map("read_later")
 }
