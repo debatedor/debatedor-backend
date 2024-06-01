@@ -4,16 +4,20 @@ import { PostsRepository } from '../repositories/posts-repository' // Precisa im
 import { WrongPostInfoError } from './errors/wrong-post-info'// importado os erros
 
 interface CreatePostUseCaseRequest{
-    title: String // titulo da notica TEM QUE ser uma string
-    content: String // conteudo TEM QUE ser uma string
-    source: String
+    title: string // titulo da notica TEM QUE ser uma string
+    content: string // conteudo TEM QUE ser uma string
+    source: string
 
 }
 
 type CreatePostUseCaseResponse = Either<
  WrongPostInfoError, // criar função em src/domain/aplication/erros
  {
-    // post sera criado e publicado. Essa função provavelmente vai estar no controller
+
+    postId: string; // retorno de uma respota bem sucedida com  os dados do post
+    title: string;
+    content: string;
+    source: string;
  }
 
 
@@ -22,22 +26,47 @@ type CreatePostUseCaseResponse = Either<
 @Injectable()
 export class CreatePostUseCase{
 
-constructor(
-   private PostsRepository = PostsRepository
-){}
+constructor (private PostsRepository = PostsRepository){}
+
 async  execute ({
 title, 
 content,
 source, // o objeto recebido deve ter essas propriedades
 }: CreatePostUseCaseRequest): Promise<CreatePostUseCaseResponse>{
 
+    //  Verifica se os dados do post são válidos
+    if(!title || !content || !source ){
+        return failure(new WrongPostInfoError);
+    }
 
 
-    // Aqui ficara a logica da  resposta para a requisição
+    try{
+       // Criar e salvar o post no banco de dados
+       const postId = await this.PostsRepository.create({
+        title,
+        content,
+        source,
+       });
+    
+
+     // Construa a resposta bem-sucedida com os dados do post criado
+     const response: CreatePostUseCaseResponse = success({
+        postId,
+        title,
+        content,
+        source,
+      });
+            
+     return response;
 
 
-}
-}
+
+
+ } catch (error){
+        return failure (new WrongPostInfoError);
+        }
+      }
+    }
 
 
 
@@ -55,5 +84,3 @@ source, // o objeto recebido deve ter essas propriedades
 
 
 
-
-}
