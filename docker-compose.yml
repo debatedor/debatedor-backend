@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
-      POSTGRES_DB: unintegra
+      POSTGRES_DB: debatedor
       PGDATA: /data/debatedor-pg
     volumes:
       - ./data/pg:/data/postgres
