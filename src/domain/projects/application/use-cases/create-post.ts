@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Either, failure, success } from '@/core/types/either';
-// Precisa importar o repositorio 
+import { PostsRepository } from '../repositories/posts-repository' // Precisa importar o repositorio 
 import { WrongPostInfoError } from './errors/wrong-post-info'// importado os erros
 
 interface CreatePostUseCaseRequest{
@@ -23,7 +23,7 @@ type CreatePostUseCaseResponse = Either<
 export class CreatePostUseCase{
 
 constructor(
-   // private postsRepository: postsRepository,
+   private PostsRepository = PostsRepository
 ){}
 async  execute ({
 title, 

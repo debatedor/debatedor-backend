@@ -28,7 +28,7 @@ model Post {
   publicationDate DateTime    @default(now()) @map("publication_date")
   content         String
   readLater       readLater[]
-  source          String? // representa a fonte da noticia, de onde a passoa está tirando a noticia?
+  source          String // representa a fonte da noticia, de onde a passoa está tirando a noticia?
 
   @@map("post")
 }
