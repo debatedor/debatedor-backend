@@ -8,4 +8,8 @@ export class InMemoryPostsRepository implements PostsRepository {
     this.posts.push(post)
     return post.id.toString()
   }
+
+  async findAll(): Promise<Post[]> {
+    return this.posts
+  }
 }

@@ -4,19 +4,23 @@ import { PostsRepository } from '@/domain/projects/application/repositories/post
 import { Post } from '@/domain/projects/enterprise/entities/post'
 
 import { PrismaService } from '../../prisma.service'
+import { PrismaPostMapper } from '../mappers/prisma-post-mapper'
 
 @Injectable()
 export class PrismaPostsRepository implements PostsRepository {
   constructor(private prisma: PrismaService) {}
   async create(post: Post) {
-    const postPrisma = await this.prisma.post.create({
-      data: {
-        content: post.content,
-        source: post.source,
-        title: post.title,
-        userId: post.publisherId,
-      },
-    })
+    const prismaPost = PrismaPostMapper.toPrisma(post)
+    const postPrisma = await this.prisma.post.create({ data: prismaPost })
+
     return postPrisma.id
+  }
+
+  async findAll(): Promise<Post[]> {
+    const allPosts = await this.prisma.post.findMany()
+    const allEntityPosts = allPosts.map((prismaPost) =>
+      PrismaPostMapper.toDomain(prismaPost),
+    )
+    return allEntityPosts
   }
 }

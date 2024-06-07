@@ -23,12 +23,12 @@ model User {
 }
 
 model Post {
-  id      String @id @default(uuid())
-  title   String
-  content String
-  source  String // representa a fonte da noticia, de onde a passoa está tirando a noticia?
-  User    User   @relation(fields: [userId], references: [id])
-  userId  String
+  id          String @id @default(uuid())
+  title       String
+  content     String
+  source      String // representa a fonte da noticia, de onde a passoa está tirando a noticia?
+  User        User   @relation(fields: [publisherId], references: [id])
+  publisherId String
 
   @@map("posts")
 }
