@@ -1,12 +1,15 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 
+import { Comment } from './comment'
+
 export interface PostProps {
   // descreve quais são as propriedades de um post
   publisherId: string
   title: string
   content: string
   source: string
+  comments?: Comment[]
 }
 
 export class Post extends Entity<PostProps> {
@@ -24,6 +27,10 @@ export class Post extends Entity<PostProps> {
 
   get source() {
     return this.props.source
+  }
+
+  get comments() {
+    return this.props.comments
   }
 
   // com o metodo create a baixo, você consegue criar instancias post em diferentes partes do codigo

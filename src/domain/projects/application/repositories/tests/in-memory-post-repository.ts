@@ -12,4 +12,9 @@ export class InMemoryPostsRepository implements PostsRepository {
   async findAll(): Promise<Post[]> {
     return this.posts
   }
+
+  async findById(id: string): Promise<Post | null> {
+    const post = this.posts.find((element) => element.id.toString() === id)
+    return post ?? null
+  }
 }

@@ -4,6 +4,9 @@ import { Optional } from '@/core/types/optional'
 
 export interface UserProps {
   name: string
+  lastname: string
+  sex?: 'MASCULINO' | 'FEMININO'
+  birthday?: string
   email: string
   password: string
   createdAt: Date
@@ -13,6 +16,18 @@ export interface UserProps {
 export class User extends Entity<UserProps> {
   get name() {
     return this.props.name
+  }
+
+  get lastname() {
+    return this.props.lastname
+  }
+
+  get sex() {
+    return this.props.sex
+  }
+
+  get birthday() {
+    return this.props.birthday
   }
 
   get email() {

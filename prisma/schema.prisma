@@ -10,12 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Position {
+  AGREES
+  DISAGREES
+}
+
+enum Sex {
+  MASCULINO
+  FEMININO
+}
+
 model User {
   id             String    @id @default(uuid())
   name           String
+  lastname       String
+  birthday       String?
+  sex            Sex?
   email          String    @unique
   password       String
   publishedPosts Post[]
+  comments       Comment[]
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedAt      DateTime? @updatedAt @map("updated_at")
 
@@ -23,12 +37,24 @@ model User {
 }
 
 model Post {
-  id          String @id @default(uuid())
+  id          String    @id @default(uuid())
   title       String
   content     String
   source      String // representa a fonte da noticia, de onde a passoa está tirando a noticia?
-  User        User   @relation(fields: [publisherId], references: [id])
+  comments    Comment[]
+  User        User      @relation(fields: [publisherId], references: [id])
   publisherId String
 
   @@map("posts")
+}
+
+model Comment {
+  id          String   @id @default(uuid())
+  argument    String
+  createdAt   DateTime @default(now()) @map("created_at")
+  position    Position
+  Post        Post     @relation(fields: [postId], references: [id])
+  postId      String
+  User        User     @relation(fields: [publisherId], references: [id])
+  publisherId String
 }

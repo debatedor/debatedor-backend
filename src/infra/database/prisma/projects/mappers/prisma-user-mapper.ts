@@ -8,6 +8,9 @@ export class PrismaUserMapper {
     return DomainUser.create(
       {
         name: raw.name,
+        lastname: raw.lastname,
+        birthday: raw.birthday ?? undefined,
+        sex: raw.sex ?? undefined,
         email: raw.email,
         password: raw.password,
         createdAt: raw.createdAt,
@@ -22,6 +25,9 @@ export class PrismaUserMapper {
       id: raw.id.toString(),
       email: raw.email,
       name: raw.name,
+      lastname: raw.lastname,
+      sex: raw.sex ?? null,
+      birthday: raw.birthday ?? null,
       password: raw.password,
       createdAt: raw.createdAt,
       updatedAt: raw.updatedAt ?? null,

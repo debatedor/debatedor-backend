@@ -63,6 +63,7 @@ export class AuthenticateUserController {
     const { accessToken } = result.value
 
     return {
+      success: true,
       access_token: accessToken,
     }
   }

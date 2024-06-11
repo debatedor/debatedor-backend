@@ -23,4 +23,14 @@ export class PrismaPostsRepository implements PostsRepository {
     )
     return allEntityPosts
   }
+
+  async findById(id: string): Promise<Post | null> {
+    const prismaPost = await this.prisma.post.findUnique({
+      where: { id },
+      include: { comments: true, User: true },
+    })
+    if (!prismaPost) return null
+    const domainPost = PrismaPostMapper.toDomain(prismaPost)
+    return domainPost
+  }
 }

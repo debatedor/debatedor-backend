@@ -37,6 +37,9 @@ const bodySchema = z.object({
       /[A-Za-z\d@$!%*?&]/,
       'A senha possuí caracteres não permitidos. (A-Z @$!%*?&) são permitidos.',
     ),
+  lastname: z.string(),
+  sex: z.union([z.literal('MASCULINO'), z.literal('FEMININO')]).optional(),
+  birthday: z.string(),
 })
 
 const bodyValidationPipe = new ZodValidationPipe(bodySchema)
@@ -50,9 +53,16 @@ export class CreateUserAccountController {
   @Post()
   @HttpCode(201)
   async handle(@Body(bodyValidationPipe) body: BodySchema) {
-    const { name, email, password } = body
+    const { name, email, password, lastname, sex, birthday } = body
 
-    const result = await this.useCase.execute({ name, email, password })
+    const result = await this.useCase.execute({
+      name,
+      email,
+      password,
+      lastname,
+      sex,
+      birthday,
+    })
 
     if (result.type === 'failure') {
       const error = result.value
