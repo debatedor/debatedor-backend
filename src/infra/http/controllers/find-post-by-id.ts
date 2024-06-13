@@ -14,7 +14,6 @@ export class FindPostById {
   async handle(@Query() postIdObject) {
     const postIdDecoded = decodeURI(postIdObject.id)
 
-    console.log(postIdDecoded)
     const result = await this.openPostUseCase.execute({ postId: postIdDecoded })
     if (result.value === null) return null
     if (result.type === 'success') {
