@@ -38,9 +38,10 @@ model User {
 
 model Post {
   id          String    @id @default(uuid())
-  title       String
-  content     String
-  source      String // representa a fonte da noticia, de onde a passoa está tirando a noticia?
+  question    String
+  description String
+  source      String // representa a fonte da noticia, de onde a passoa está tirando a noticia
+  createdAt   DateTime
   comments    Comment[]
   User        User      @relation(fields: [publisherId], references: [id])
   publisherId String

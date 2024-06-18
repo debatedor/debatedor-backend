@@ -1,7 +1,5 @@
 import { Post } from '@/domain/projects/enterprise/entities/post'
 
-import { CommentPresenter } from './comment-presenter'
-
 export class PostPresenter {
   static toHTTP(post: Post) {
     return {
@@ -11,9 +9,6 @@ export class PostPresenter {
       description: post.description,
       source: post.source,
       date: post.createdAt.toString(),
-      comments: post.comments?.map((comment) =>
-        CommentPresenter.toHTTP(comment),
-      ),
     }
   }
 }

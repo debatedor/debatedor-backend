@@ -1,14 +1,16 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
+import { Optional } from '@/core/types/optional'
 
 import { Comment } from './comment'
 
 export interface PostProps {
   // descreve quais são as propriedades de um post
   publisherId: string
-  title: string
-  content: string
+  question: string
+  description: string
   source: string
+  createdAt: Date
   comments?: Comment[]
 }
 
@@ -17,12 +19,12 @@ export class Post extends Entity<PostProps> {
     return this.props.publisherId
   }
 
-  get title() {
-    return this.props.title
+  get question() {
+    return this.props.question
   }
 
-  get content() {
-    return this.props.content
+  get description() {
+    return this.props.description
   }
 
   get source() {
@@ -33,16 +35,18 @@ export class Post extends Entity<PostProps> {
     return this.props.comments
   }
 
-  // com o metodo create a baixo, você consegue criar instancias post em diferentes partes do codigo
-  static create(props: PostProps, id?: UniqueEntityId) {
-    // metodo estático, pode ser chamado diretamente na classe Post
+  get createdAt() {
+    return this.props.createdAt
+  }
+
+  static create(props: Optional<PostProps, 'createdAt'>, id?: UniqueEntityId) {
     const post = new Post(
       {
         ...props,
+        createdAt: props.createdAt ?? new Date(),
       },
       id,
     )
-
     return post
   }
 }

@@ -8,8 +8,8 @@ import { WrongPostInfoError } from './errors/wrong-post-info' // importado os er
 
 interface CreatePostUseCaseRequest {
   publisherId: string
-  title: string // titulo da notica TEM QUE ser uma string
-  content: string // conteudo TEM QUE ser uma string
+  question: string // titulo da notica TEM QUE ser uma string
+  description: string // conteudo TEM QUE ser uma string
   source: string
 }
 
@@ -26,20 +26,20 @@ export class CreatePostUseCase {
 
   async execute({
     publisherId,
-    title,
-    content,
+    question,
+    description,
     source, // o objeto recebido deve ter essas propriedades
   }: CreatePostUseCaseRequest): Promise<CreatePostUseCaseResponse> {
     //  Verifica se os dados do post são válidos
-    // if (!title || !content || !source) {
+    // if (!question || !description || !source) {
     //   return failure(new WrongPostInfoError())
     // }
 
     // Criar e salvar o post no banco de dados
     const postEntity = Post.create({
       publisherId,
-      title,
-      content,
+      question,
+      description,
       source,
     })
 

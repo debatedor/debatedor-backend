@@ -7,8 +7,8 @@ export class PrismaPostMapper {
   static toDomain(raw: PrismaPost): DomainPost {
     return DomainPost.create(
       {
-        title: raw.title,
-        content: raw.content,
+        question: raw.question,
+        description: raw.description,
         source: raw.source,
         publisherId: raw.publisherId,
       },
@@ -19,9 +19,10 @@ export class PrismaPostMapper {
   static toPrisma(raw: DomainPost): PrismaPost {
     return {
       id: raw.id.toString(),
-      content: raw.content,
-      title: raw.title,
+      description: raw.description,
+      question: raw.question,
       source: raw.source,
+      createdAt: raw.createdAt,
       publisherId: raw.publisherId,
     }
   }

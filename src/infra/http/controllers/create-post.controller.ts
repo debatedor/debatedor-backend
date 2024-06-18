@@ -13,8 +13,8 @@ import { UserJwtPayload } from '@/infra/auth/jwt.strategy'
 import { ZodValidationPipe } from '@/infra/http/controllers/pipes/zod-validation-pipe' // usado para validar o esquema de dados da requisição antes de passar para lógica de negócios
 
 const bodySchema = z.object({
-  title: z.string(),
-  content: z.string(),
+  question: z.string(),
+  description: z.string(),
   source: z.string().url('It must be a valid link'),
 })
 
@@ -31,12 +31,12 @@ export class CreatePostController {
     @CurrentUser() user: UserJwtPayload,
     @Body(bodyValidationPipe) body: BodySchema,
   ) {
-    const { title, content, source } = body
+    const { question, description, source } = body
 
     const result = await this.useCase.execute({
       publisherId: user.sub,
-      title,
-      content,
+      question,
+      description,
       source,
     })
 
