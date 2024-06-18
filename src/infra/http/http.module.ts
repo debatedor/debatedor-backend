@@ -5,6 +5,7 @@ import { CreateCommentUseCase } from '@/domain/projects/application/use-cases/cr
 import { CreatePostUseCase } from '@/domain/projects/application/use-cases/create-post'
 import { CreateUserAccountUseCase } from '@/domain/projects/application/use-cases/create-user-account'
 import { FindAllPostsUseCase } from '@/domain/projects/application/use-cases/find-all-posts'
+import { OpenPostUseCase } from '@/domain/projects/application/use-cases/open-post'
 
 import { CryptographyModule } from '../cryptography/cryptography.module'
 import { DatabaseModule } from '../database/database.module'
@@ -13,6 +14,7 @@ import { CreateUserAccountController } from './controllers/create–user-account
 import { CreateCommentController } from './controllers/create-comment-controller'
 import { CreatePostController } from './controllers/create-post.controller'
 import { FindAllPostsController } from './controllers/find-all-posts.controller'
+import { FindPostById } from './controllers/find-post-by-id'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -22,6 +24,7 @@ import { FindAllPostsController } from './controllers/find-all-posts.controller'
     CreatePostController,
     FindAllPostsController,
     CreateCommentController,
+    FindPostById,
   ],
   providers: [
     CreateUserAccountUseCase,
@@ -29,6 +32,7 @@ import { FindAllPostsController } from './controllers/find-all-posts.controller'
     CreatePostUseCase,
     FindAllPostsUseCase,
     CreateCommentUseCase,
+    OpenPostUseCase,
   ],
 })
 export class HttpModule {}

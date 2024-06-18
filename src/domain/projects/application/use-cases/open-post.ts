@@ -1,5 +1,6 @@
+import { Injectable } from '@nestjs/common'
+
 import { Either, success } from '@/core/types/either'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
 
 import { Post } from '../../enterprise/entities/post'
 import { PostsRepository } from '../repositories/posts-repository'
@@ -11,11 +12,9 @@ interface OpenPostUseCaseRequest {
 
 type OpenPostUseCaseResponse = Either<PostDoesNotExist, Post | null>
 
+@Injectable()
 export class OpenPostUseCase {
-  constructor(
-    private prismaService: PrismaService,
-    private postsRepository: PostsRepository,
-  ) {}
+  constructor(private postsRepository: PostsRepository) {}
 
   async execute({
     postId,
