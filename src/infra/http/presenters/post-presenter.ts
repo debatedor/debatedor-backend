@@ -10,7 +10,7 @@ export class PostPresenter {
       question: post.question,
       description: post.description,
       source: post.source,
-      date: post.createdAt.toString(),
+      createdAt: post.createdAt.toString(),
       comments: post.comments?.map((comment) =>
         CommentPresenter.toHTTP(comment),
       ),
