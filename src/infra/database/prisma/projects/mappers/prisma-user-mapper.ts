@@ -4,7 +4,26 @@ import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { User as DomainUser } from '@/domain/projects/enterprise/entities/user'
 
 export class PrismaUserMapper {
-  static toDomain(raw: PrismaUser): DomainUser {
+  static toDomain(raw: PrismaUser | null): DomainUser | undefined {
+    if(raw === null) {
+      return undefined
+    }
+    return DomainUser.create(
+      {
+        name: raw.name,
+        lastname: raw.lastname,
+        birthday: raw.birthday ?? undefined,
+        sex: raw.sex ?? undefined,
+        email: raw.email,
+        password: raw.password,
+        createdAt: raw.createdAt,
+        updatedAt: raw.updatedAt,
+      },
+      new UniqueEntityId(raw.id),
+    )
+  }
+
+  static toRequiredDomain(raw: PrismaUser): DomainUser{
     return DomainUser.create(
       {
         name: raw.name,

@@ -1,13 +1,14 @@
 import { Entity } from '@/core/entities/entity'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
+import { User } from './user'
 
 interface CommentProps {
   argument: string
   position: 'AGREES' | 'DISAGREES'
   createdAt: Date
   postId: string
-  publisherId: string
+  publisher: User
 }
 
 export class Comment extends Entity<CommentProps> {
@@ -27,8 +28,8 @@ export class Comment extends Entity<CommentProps> {
     return this.props.postId
   }
 
-  get publisherId() {
-    return this.props.publisherId
+  get publisher() {
+    return this.props.publisher
   }
 
   static create(

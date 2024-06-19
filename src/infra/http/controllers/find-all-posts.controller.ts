@@ -4,6 +4,7 @@ import { FindAllPostsUseCase } from '@/domain/projects/application/use-cases/fin
 import { Public } from '@/infra/auth/public'
 
 import { PostPresenter } from '../presenters/post-presenter'
+import { PostFeedCardPresenter } from '../presenters/post-feed-card-presenter'
 
 @Controller('posts')
 @Public()
@@ -14,7 +15,7 @@ export class FindAllPostsController {
   async handle() {
     const result = await this.findAllPostsUseCase.execute()
     if (result.type === 'success') {
-      const HTTPPosts = result.value?.map((post) => PostPresenter.toHTTP(post))
+      const HTTPPosts = result.value?.map((post) => PostFeedCardPresenter.toHTTP(post))
       return HTTPPosts
     }
   }

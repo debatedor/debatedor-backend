@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common'
 
-import { Either, success } from '@/core/types/either'
+import { Either, failure, success } from '@/core/types/either'
 
 import { Post } from '../../enterprise/entities/post'
 import { PostsRepository } from '../repositories/posts-repository' // Precisa importar o repositorio
 import { WrongPostInfoError } from './errors/wrong-post-info' // importado os erros
+import { UsersRepository } from '../repositories/users-repository'
+import { PrismaUserMapper } from '@/infra/database/prisma/projects/mappers/prisma-user-mapper'
+import { UserDoesNotExists } from './errors/user-does-not-exists'
 
 interface CreatePostUseCaseRequest {
   publisherId: string
@@ -14,7 +17,7 @@ interface CreatePostUseCaseRequest {
 }
 
 type CreatePostUseCaseResponse = Either<
-  WrongPostInfoError, // criar função em src/domain/aplication/erros
+  UserDoesNotExists, // criar função em src/domain/aplication/erros
   {
     postId: string // retorno de uma respota bem sucedida com  os dados do post
   }
@@ -22,7 +25,7 @@ type CreatePostUseCaseResponse = Either<
 
 @Injectable()
 export class CreatePostUseCase {
-  constructor(private postsRepository: PostsRepository) {}
+  constructor(private usersRepository: UsersRepository, private postsRepository: PostsRepository) {}
 
   async execute({
     publisherId,
@@ -36,8 +39,15 @@ export class CreatePostUseCase {
     // }
 
     // Criar e salvar o post no banco de dados
+
+    const publisher = await this.usersRepository.findById(publisherId);
+
+    if (!publisher) {
+      return failure(new UserDoesNotExists())
+    }
+    
     const postEntity = Post.create({
-      publisherId,
+      publisher,
       question,
       description,
       source,

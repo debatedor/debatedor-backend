@@ -15,7 +15,7 @@ import { ZodValidationPipe } from '@/infra/http/controllers/pipes/zod-validation
 const bodySchema = z.object({
   question: z.string(),
   description: z.string(),
-  source: z.string().url('It must be a valid link'),
+  source: z.string(),
 })
 
 const bodyValidationPipe = new ZodValidationPipe(bodySchema)

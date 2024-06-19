@@ -29,17 +29,21 @@ export class CreateCommentUseCase {
     postId,
     publisherId,
   }: CreateCommentUseCaseRequest): Promise<CreateCommentUseCaseResponse> {
-    const createdPost = this.postsRepository.findById(postId)
+    const createdPost = await this.postsRepository.findById(postId)
+    
+
 
     if (!createdPost) {
       return failure(new PostDoesNotExist())
     }
 
+    const publisher = createdPost?.publisher
+
     const comment = Comment.create({
       argument,
       position,
       postId,
-      publisherId,
+      publisher,
     })
 
     this.commentsRepository.create(comment)
