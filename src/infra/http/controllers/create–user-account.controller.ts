@@ -53,14 +53,13 @@ export class CreateUserAccountController {
   @Post()
   @HttpCode(201)
   async handle(@Body(bodyValidationPipe) body: BodySchema) {
-    const { name, email, password, lastname, sex, birthday } = body
+    const { name, email, password, lastname, birthday } = body
 
     const result = await this.useCase.execute({
       name,
       email,
       password,
       lastname,
-      sex,
       birthday,
     })
 

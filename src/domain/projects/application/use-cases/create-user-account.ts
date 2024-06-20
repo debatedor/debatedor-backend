@@ -13,8 +13,7 @@ interface CreateUserAccountUseCaseRequest {
   email: string
   password: string
   lastname: string
-  sex?: 'MASCULINO' | 'FEMININO'
-  birthday?: string
+  birthday: string
 }
 
 type CreateUserAccountUseCaseResponse = Either<
@@ -37,7 +36,6 @@ export class CreateUserAccountUseCase {
     email,
     password,
     lastname,
-    sex,
     birthday,
   }: CreateUserAccountUseCaseRequest): Promise<CreateUserAccountUseCaseResponse> {
     const userWithEmail = await this.usersRepository.findByEmail(email)
@@ -51,7 +49,6 @@ export class CreateUserAccountUseCase {
       email,
       password: await this.hashGenerator.hash(password),
       lastname,
-      sex,
       birthday,
     })
 

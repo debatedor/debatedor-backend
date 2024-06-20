@@ -15,17 +15,11 @@ enum Position {
   DISAGREES
 }
 
-enum Sex {
-  MASCULINO
-  FEMININO
-}
-
 model User {
   id             String    @id @default(uuid())
   name           String
   lastname       String
-  birthday       String?
-  sex            Sex?
+  birthday       String
   email          String    @unique
   password       String
   publishedPosts Post[]

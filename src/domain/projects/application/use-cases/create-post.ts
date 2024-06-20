@@ -3,21 +3,21 @@ import { Injectable } from '@nestjs/common'
 import { Either, failure, success } from '@/core/types/either'
 
 import { Post } from '../../enterprise/entities/post'
-import { PostsRepository } from '../repositories/posts-repository' // Precisa importar o repositorio
+import { PostsRepository } from '../repositories/posts-repository'
 import { UsersRepository } from '../repositories/users-repository'
 import { UserDoesNotExists } from './errors/user-does-not-exists'
 
 interface CreatePostUseCaseRequest {
   publisherId: string
-  question: string // titulo da notica TEM QUE ser uma string
-  description: string // conteudo TEM QUE ser uma string
+  question: string
+  description: string
   source: string
 }
 
 type CreatePostUseCaseResponse = Either<
-  UserDoesNotExists, // criar função em src/domain/aplication/erros
+  UserDoesNotExists,
   {
-    postId: string // retorno de uma respota bem sucedida com  os dados do post
+    postId: string
   }
 >
 

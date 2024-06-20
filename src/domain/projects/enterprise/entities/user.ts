@@ -5,8 +5,7 @@ import { Optional } from '@/core/types/optional'
 export interface UserProps {
   name: string
   lastname: string
-  sex?: 'MASCULINO' | 'FEMININO'
-  birthday?: string
+  birthday: string
   email: string
   password: string
   createdAt: Date
@@ -20,10 +19,6 @@ export class User extends Entity<UserProps> {
 
   get lastname() {
     return this.props.lastname
-  }
-
-  get sex() {
-    return this.props.sex
   }
 
   get birthday() {
