@@ -38,8 +38,9 @@ const bodySchema = z.object({
       'A senha possuí caracteres não permitidos. (A-Z @$!%*?&) são permitidos.',
     ),
   lastname: z.string(),
-  sex: z.union([z.literal('MASCULINO'), z.literal('FEMININO')]).optional(),
-  birthday: z.string(),
+  birthday: z
+    .string()
+    .min(1, { message: 'Não é possível enviar uma data vazia' }),
 })
 
 const bodyValidationPipe = new ZodValidationPipe(bodySchema)
