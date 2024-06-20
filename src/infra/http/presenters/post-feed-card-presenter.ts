@@ -11,7 +11,12 @@ export class PostFeedCardPresenter {
       question: post.question,
       description: post.description,
       source: post.source,
-      date: post.createdAt.toString(),
+      createdAt:
+        post.createdAt.toLocaleDateString() +
+        '  ' +
+        post.createdAt.getHours() +
+        ':' +
+        post.createdAt.getMinutes(),
     }
   }
 }
