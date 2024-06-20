@@ -13,9 +13,15 @@ import { UserJwtPayload } from '@/infra/auth/jwt.strategy'
 import { ZodValidationPipe } from '@/infra/http/controllers/pipes/zod-validation-pipe' // usado para validar o esquema de dados da requisição antes de passar para lógica de negócios
 
 const bodySchema = z.object({
-  question: z.string(),
-  description: z.string(),
-  source: z.string(),
+  question: z.string().min(1, {
+    message: 'Digite pelo menos um caracter para a pergunta de sim ou não',
+  }),
+  description: z.string().min(1, {
+    message: 'Digite pelo menos um caracter para a descrição',
+  }),
+  source: z.string().min(1, {
+    message: 'Digite pelo menos um caracter para a fonte(link)',
+  }),
 })
 
 const bodyValidationPipe = new ZodValidationPipe(bodySchema)
