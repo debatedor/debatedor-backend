@@ -4,9 +4,7 @@ import { Either, failure, success } from '@/core/types/either'
 
 import { Post } from '../../enterprise/entities/post'
 import { PostsRepository } from '../repositories/posts-repository' // Precisa importar o repositorio
-import { WrongPostInfoError } from './errors/wrong-post-info' // importado os erros
 import { UsersRepository } from '../repositories/users-repository'
-import { PrismaUserMapper } from '@/infra/database/prisma/projects/mappers/prisma-user-mapper'
 import { UserDoesNotExists } from './errors/user-does-not-exists'
 
 interface CreatePostUseCaseRequest {
@@ -25,27 +23,23 @@ type CreatePostUseCaseResponse = Either<
 
 @Injectable()
 export class CreatePostUseCase {
-  constructor(private usersRepository: UsersRepository, private postsRepository: PostsRepository) {}
+  constructor(
+    private usersRepository: UsersRepository,
+    private postsRepository: PostsRepository,
+  ) {}
 
   async execute({
     publisherId,
     question,
     description,
-    source, // o objeto recebido deve ter essas propriedades
+    source,
   }: CreatePostUseCaseRequest): Promise<CreatePostUseCaseResponse> {
-    //  Verifica se os dados do post são válidos
-    // if (!question || !description || !source) {
-    //   return failure(new WrongPostInfoError())
-    // }
-
-    // Criar e salvar o post no banco de dados
-
-    const publisher = await this.usersRepository.findById(publisherId);
+    const publisher = await this.usersRepository.findById(publisherId)
 
     if (!publisher) {
       return failure(new UserDoesNotExists())
     }
-    
+
     const postEntity = Post.create({
       publisher,
       question,
@@ -55,7 +49,6 @@ export class CreatePostUseCase {
 
     const postId = await this.postsRepository.create(postEntity)
 
-    // Construa a resposta bem-sucedida com os dados do post criado
     return success({
       postId,
     })
