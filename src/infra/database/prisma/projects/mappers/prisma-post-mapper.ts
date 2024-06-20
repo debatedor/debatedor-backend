@@ -2,9 +2,10 @@ import { Post as PrismaPost } from '@prisma/client'
 
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Post as DomainPost } from '@/domain/projects/enterprise/entities/post'
-import { PrismaPostWithRelationships } from './PrismaModelsWithRelationships/prisma-post-model-with-relationships'
-import { PrismaUserMapper } from './prisma-user-mapper'
+
 import { PrismaCommentMapper } from './prisma-comments-mapper'
+import { PrismaUserMapper } from './prisma-user-mapper'
+import { PrismaPostWithRelationships } from './PrismaModelsWithRelationships/prisma-post-model-with-relationships'
 
 export class PrismaPostMapper {
   static toDomain(raw: PrismaPostWithRelationships): DomainPost {
@@ -14,8 +15,13 @@ export class PrismaPostMapper {
         description: raw.description,
         source: raw.source,
         createdAt: raw.createdAt,
-        publisher: PrismaUserMapper.toRequiredDomain(raw.User),
-        comments: raw.comments === undefined? undefined : raw.comments.map((comment) => PrismaCommentMapper.toDomainReceivingUser(comment, raw.User))
+        publisher: PrismaUserMapper.toDomain(raw.User),
+        comments:
+          raw.comments === undefined
+            ? undefined
+            : raw.comments.map((comment) =>
+                PrismaCommentMapper.toDomain(comment),
+              ),
       },
       new UniqueEntityId(raw.id),
     )

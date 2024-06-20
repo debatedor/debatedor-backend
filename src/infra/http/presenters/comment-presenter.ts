@@ -3,8 +3,10 @@ import { Comment } from '@/domain/projects/enterprise/entities/comment'
 export class CommentPresenter {
   static toHTTP(comment: Comment) {
     return {
-      publisherId: comment.publisherId,
-      id: comment.id.toString(),
+      publisher: {
+        name: comment.publisher.name,
+        lastname: comment.publisher.lastname,
+      },
       argument: comment.argument,
       createdAt: comment.createdAt,
       position: comment.position,

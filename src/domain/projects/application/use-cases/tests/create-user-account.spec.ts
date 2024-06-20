@@ -26,8 +26,10 @@ describe('Create user account', () => {
 
   it('should be able to create an user account', async () => {
     const result = await sut.execute({
-      name: faker.person.fullName(),
+      name: faker.person.firstName(),
+      lastname: faker.person.lastName(),
       email: faker.internet.email(),
+      birthday: '',
       password: faker.internet.password(),
     })
 
@@ -39,12 +41,13 @@ describe('Create user account', () => {
 
   it('should hash user password upon registration', async () => {
     const result = await sut.execute({
-      name: faker.person.fullName(),
+      name: faker.person.firstName(),
+      lastname: faker.person.lastName(),
       email: faker.internet.email(),
-      password: '123456',
+      password: '12345678',
     })
 
-    const hashedPassword = await fakeHashGenerator.hash('123456')
+    const hashedPassword = await fakeHashGenerator.hash('12345678')
 
     expect(result.type).toBe('success')
 
@@ -59,7 +62,8 @@ describe('Create user account', () => {
     inMemoryUsersRepository.items.push(user)
 
     const result = await sut.execute({
-      name: 'John Doe',
+      name: 'John',
+      lastname: 'Doe',
       email: 'john.doe@mail.com',
       password: '123456',
     })

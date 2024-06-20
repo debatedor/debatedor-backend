@@ -4,7 +4,8 @@ export class PostFeedCardPresenter {
   static toHTTP(post: Post) {
     return {
       publisher: {
-        name: post.publisher.name
+        name: post.publisher.name,
+        lastname: post.publisher.lastname,
       },
       id: post.id.toString(),
       question: post.question,

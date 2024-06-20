@@ -5,8 +5,10 @@ import { CommentPresenter } from './comment-presenter'
 export class PostPresenter {
   static toHTTP(post: Post) {
     return {
-      publisherId: post.publisherId,
-      id: post.id.toString(),
+      publisher: {
+        name: post.publisher.name,
+        lastname: post.publisher.lastname,
+      },
       question: post.question,
       description: post.description,
       source: post.source,
