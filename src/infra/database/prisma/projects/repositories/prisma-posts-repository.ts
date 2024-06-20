@@ -19,6 +19,7 @@ export class PrismaPostsRepository implements PostsRepository {
   async findAll(): Promise<Post[]> {
     const allPosts = await this.prisma.post.findMany({
       include: { User: true },
+      orderBy: { createdAt: 'desc' },
     })
     const allEntityPosts = allPosts.map((prismaPost) =>
       PrismaPostMapper.toDomain(prismaPost),
