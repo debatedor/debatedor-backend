@@ -23,7 +23,7 @@ Para rodar o projeto você vai precisar ter o docker, docker compose e npm(ou pn
 5. ⚙️ Configure as as variáveis de ambiente<br>
 - Faça uma cópia do arquivo ".env.example"
 - Renomeie o arquivo copiado para ".env"
-- Coloque as informações de usuário, senha, banco de dados, ip, porta e demais informações na URL do banco
+- Confirme se as informações de usuário, senha, banco de dados, ip, porta e demais informações na URL do banco estão de acordo com o "docker-compose.yml"e configure a URL caso necessário.
 
 6. 🛢️ Crie o banco com:
 ```npx prisma migrate dev```
