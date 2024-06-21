@@ -12,7 +12,7 @@ export class PostPresenter {
       question: post.question,
       description: post.description,
       source: post.source,
-      createdAt: post.createdAt.toString(),
+      createdAt: post.getFormattedCreatedAt(),
       comments: post.comments?.map((comment) =>
         CommentPresenter.toHTTP(comment),
       ),

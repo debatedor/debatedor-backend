@@ -6,7 +6,7 @@ import { User } from './user'
 
 interface CommentProps {
   argument: string
-  position: 'AGREES' | 'DISAGREES'
+  // position: 'AGREES' | 'DISAGREES'
   createdAt: Date
   postId: string
   publisher: User
@@ -17,9 +17,9 @@ export class Comment extends Entity<CommentProps> {
     return this.props.argument
   }
 
-  get position() {
-    return this.props.position
-  }
+  // get position() {
+  //   return this.props.position
+  // }
 
   get createdAt() {
     return this.props.createdAt

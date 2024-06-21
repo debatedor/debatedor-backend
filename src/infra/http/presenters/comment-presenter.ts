@@ -9,7 +9,7 @@ export class CommentPresenter {
       },
       argument: comment.argument,
       createdAt: comment.createdAt,
-      position: comment.position,
+      // position: comment.position,
       postId: comment.postId,
     }
   }

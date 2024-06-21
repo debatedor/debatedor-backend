@@ -12,7 +12,7 @@ export class PrismaCommentMapper {
       {
         publisher: PrismaUserMapper.toDomain(raw.User),
         argument: raw.argument,
-        position: raw.position,
+        // position: raw.position,
         createdAt: raw.createdAt,
         postId: raw.postId,
       },
@@ -38,7 +38,7 @@ export class PrismaCommentMapper {
       id: raw.id.toString(),
       argument: raw.argument,
       createdAt: raw.createdAt,
-      position: raw.position,
+      // position: raw.position,
       postId: raw.postId,
       publisherId: raw.publisher.id.toString(),
     }

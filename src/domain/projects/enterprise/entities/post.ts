@@ -40,6 +40,16 @@ export class Post extends Entity<PostProps> {
     return this.props.createdAt
   }
 
+  getFormattedCreatedAt() {
+    return (
+      this.props.createdAt.toLocaleDateString() +
+      '  ' +
+      this.props.createdAt.getHours() +
+      ':' +
+      this.props.createdAt.getMinutes()
+    )
+  }
+
   // com o metodo create a baixo, você consegue criar instancias post em diferentes partes do codigo
   static create(props: Optional<PostProps, 'createdAt'>, id?: UniqueEntityId) {
     // metodo estático, pode ser chamado diretamente na classe Post

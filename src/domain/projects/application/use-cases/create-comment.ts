@@ -5,11 +5,13 @@ import { Either, failure, success } from '@/core/types/either'
 import { Comment } from '../../enterprise/entities/comment'
 import { CommentsRepository } from '../repositories/comments-repository'
 import { PostsRepository } from '../repositories/posts-repository'
+import { UsersRepository } from '../repositories/users-repository'
 import { PostDoesNotExist } from './errors/post-does-not-exist'
+import { UserDoesNotExists } from './errors/user-does-not-exists'
 
 interface CreateCommentUseCaseRequest {
   argument: string
-  position: 'AGREES' | 'DISAGREES'
+  // position: 'AGREES' | 'DISAGREES'
   postId: string
   publisherId: string
 }
@@ -21,27 +23,30 @@ export class CreateCommentUseCase {
   constructor(
     private postsRepository: PostsRepository,
     private commentsRepository: CommentsRepository,
+    private usersRepository: UsersRepository,
   ) {}
 
   async execute({
     argument,
-    position,
+    // position,
     postId,
     publisherId,
   }: CreateCommentUseCaseRequest): Promise<CreateCommentUseCaseResponse> {
-    const createdPost = await this.postsRepository.findById(postId)
-    
+    const publisher = await this.usersRepository.findById(publisherId)
 
+    if (!publisher) {
+      return failure(new UserDoesNotExists())
+    }
+
+    const createdPost = await this.postsRepository.findById(postId)
 
     if (!createdPost) {
       return failure(new PostDoesNotExist())
     }
 
-    const publisher = createdPost?.publisher
-
     const comment = Comment.create({
       argument,
-      position,
+      // position,
       postId,
       publisher,
     })
