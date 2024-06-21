@@ -10,7 +10,7 @@ Para rodar o projeto você vai precisar ter o docker, docker compose e npm(ou pn
 3. ⬇️ Instale as dependências com:<br>
 ```npm install```
 
-4. 🐳 Execute:<br>
+4. 🐳 Com o docker configurado, execute:<br>
 ```docker compose up -d```
 (sem o "-" mesmo)
 
