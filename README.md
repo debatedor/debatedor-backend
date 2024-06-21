@@ -1,4 +1,10 @@
-### 🚀 Como rodar o projeto 
+# Debatedor back-end
+
+### 🎬 Video do projeto rodando:
+https://youtu.be/R3nk2A4OLHQ
+
+---
+### 🚀 Como rodar o projeto na sua máquina
 Para rodar o projeto você vai precisar ter o docker, docker compose e npm(ou pnpm) instalados na sua máquina
 
 1. 🪞 Faça um clone do projeto com:<br>
